@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   
+      <style>
+body {
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+      }
+      .header {
+        padding: 32px;
+      }
+      .pet-name {
+        font-size: 50px;
+      }
+
+
+    .pet-image {
+        height: 500px;
+        max-width: 100%;
+        padding: 32px;
+
+    }
+    .main {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .image-area {
+    background-color: #FFC292;
+    display: grid;
+    justify-items: center;
+
+    }
+
+    .interactive-area {
+        background-color: #00BEBD;
+        display: grid;
+        align-items:center;
+        justify-items:center;
+    }
+
+    .activity-icon{
+height:40px;
+width: 40px;
+    }
+    .activity-row {
+       display:grid;
+       grid-template-columns:1fr 1fr 1fr;
+       width: 90%; 
+       align-items: center;
+    }
+    .activity-button {
+        background-color: #B27499;
+        border-radius: 8px;
+        box-shadow: 0 0 5px 0 grey;
+        color: white;
+        cursor: pointer; 
+        height: 100%;
+        display: grid;
+        align-items: center;
+        justify-items: center; 
+        
+        }
+    .hidden {
+        display:none;
+    }
+        
+
+      </style>
+  </head>
+  <body>
+
+    <div class ="header">
+        <div class = "pet name">Harold</div>
+        <div class = "pet description" >He is cute and energetic!</div>
+        </div>
+    </div>
+    
+    <div class="main">
+        <div class ="image-area"><img id = "pet-image" class="pet-image" src='dog-neutral.jpg' /></div> 
+        <div class = "interactive-area">
+
+            <div id="food-row" class="activity-row">
+                <img class="activity-icon" src="dog-food.jpg" />
+                <div id = "food-stat" class="activity-stat">50</div>
+                <div class="activity-button"onclick = "giveFood()">Eat Food</div>
+              </div>
+              <div id="water-row" class="activity-row">
+                <img class="activity-icon" src="dog-water.jpg" />
+                <div id = "water-stat" class="activity-stat">50</div>
+                <div class="activity-button"onclick="giveWater()">Drink Water</div>
+              </div>
+              <div id="fetch-row" class="activity-row">
+                <img class="activity-icon" src="dog-activity.jpg" />
+                <div id = "fetch-stat" class="activity-stat">50</div>
+                <div class="activity-button"onclick="giveFetch()">Play Fetch</div>
+            <div id="end-game" class="end-game hidden" >
+                <div class = "message">Your pet has passed out.</div>
+                <div class = "activity-button restart-button">Restart</div>
+            
+            </div>
+
+        </div>
+    </div>
+
+  </body>
+
+  <script>
+
+var HasNotPassedOut = true
+
+    var food = 50
+    var water = 50
+    var Fetch = 50
+
+    var giveFood = () => {
+      food = food + 15
+      water = water - 5
+      Fetch = Fetch - 5
+
+      updateHTML()
+    }
+
+    var giveWater = () => {
+      water = water + 15
+      food = food - 5
+      Fetch = Fetch - 2
+
+      updateHTML()
+    }
+
+    var giveFetch = () => {
+      Fetch = Fetch + 30
+      water = water - 15
+      food = food - 10
+
+      updateHTML()
+    }
+
+    var updateHTML = () => {
+      document.getElementById("food-stat").innerHTML = food
+      document.getElementById("water-stat").innerHTML = water
+      document.getElementById("fetch-stat").innerHTML = Fetch
+
+
+    var lowestStat = Math.min(food,water,Fetch)
+
+    var imageSrc
+
+    if (lowestStat <= 0) {
+        imageSrc = 'passed-out.jpeg'
+        if (hasNotPassedOut) {
+          toggleInteractivity()
+          hasNotPassedOut = false
+
+
+    }
+
+    else if (lowestStat < 25) {
+        imageSrc ='dog-tired.jpg'
+    }
+    else if (lowestStat < 75){
+        imageSrc ='dog-neutral.jpg'
+    }
+    else if (lowestStat < 100) {
+        imageSrc ='dog-upbeat.jpg'
+    }
+    else {
+        imageSrc ='dog-exuberant.jpg'
+
+    }
+    
+document.getElementById("pet-image").src = imageSrc
+    }
+
+    var agePet = () => {
+      water = water - 8
+      food = food - 4
+      Fetch = Fetch - 2
+      updateHTML()
+    }
+
+    setInterval(agePet, 2000)
+
+    var toggleInteractivity = () => {
+      document.getElementById("food-row").classList.toggle("hidden")
+      document.getElementById("water-row").classList.toggle("hidden")
+      document.getElementById("fetch-row").classList.toggle("hidden")
+      document.getElementById("end-game").classList.toggle("hidden")
+    }
+}
+  </script>
+    
+</html>
