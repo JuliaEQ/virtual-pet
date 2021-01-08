@@ -49,6 +49,7 @@ width: 40px;
        grid-template-columns:1fr 1fr 1fr;
        width: 90%; 
        align-items: center;
+       padding: 0 1rem;
     }
     .activity-button {
         background-color: #B27499;
@@ -95,12 +96,13 @@ width: 40px;
                 <img class="activity-icon" src="dog-activity.jpg" />
                 <div id = "fetch-stat" class="activity-stat">50</div>
                 <div class="activity-button"onclick="giveFetch()">Play Fetch</div>
-            <div id="end-game" class="end-game hidden" >
-                <div class = "message">Your pet has passed out.</div>
-                <div class = "activity-button restart-button">Restart</div>
-            
             </div>
-
+            
+        <div id="end-game" class="end-game hidden" >
+                <div class = "message">Your pet has passed out.</div>
+                <div class="activity-button restart-button" onclick="restart()">
+                    Restart</div>
+            
         </div>
     </div>
 
@@ -108,7 +110,7 @@ width: 40px;
 
   <script>
 
-var HasNotPassedOut = true
+    var HasNotPassedOut = true
 
     var food = 50
     var water = 50
@@ -149,13 +151,13 @@ var HasNotPassedOut = true
     var imageSrc
 
     if (lowestStat <= 0) {
-        imageSrc = 'passed-out.jpeg'
-        if (hasNotPassedOut) {
+        imageSrc = 'dog-passedout.jpg'
+        if (HasNotPassedOut) {
           toggleInteractivity()
           hasNotPassedOut = false
-
-
+        }
     }
+
 
     else if (lowestStat < 25) {
         imageSrc ='dog-tired.jpg'
@@ -189,7 +191,15 @@ document.getElementById("pet-image").src = imageSrc
       document.getElementById("fetch-row").classList.toggle("hidden")
       document.getElementById("end-game").classList.toggle("hidden")
     }
-}
+    var restart = () => {
+      food = 50
+      water = 50
+      exercise = 50
+      hasNotPassedOut = true
+      toggleInteractivity()
+      updateHTML()
+    }
+
   </script>
     
 </html>
